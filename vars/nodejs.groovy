@@ -1,12 +1,12 @@
 def lintChecks(component){
-        sh "echo ***** Starting Style Checks ${component} ***** "
+        sh "echo ***** Starting Style Checks for ${component} ***** "
         sh "npm install jslint"
         sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
-        sh "echo ***** Style Checks are completed ***** "
+        sh "echo ***** Style Checks are completed for ${component} ***** "
 
 } 
 
-def PipeLine(component){
+def PipeLine(component_name){
     pipeline{
     agent {
         label "ws"
@@ -15,7 +15,7 @@ def PipeLine(component){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks()
+                    lintChecks('${component_name}')
                 }
             }
         }
