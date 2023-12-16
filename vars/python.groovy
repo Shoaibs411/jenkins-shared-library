@@ -1,4 +1,4 @@
-def lintChecks_python(component){
+def lintChecks(component){
         sh "echo ***** Starting Style Checks for ${component} ***** "
         //sh "pip install pylint"
         //sh "/home/centos/payment/pylint payment.py || true"
@@ -18,7 +18,7 @@ def call(component){
          stage('Lint Checks'){
          steps{
                 script{
-                    lintChecks_python("${component}")
+                    lintChecks("${component}")
                 }
             }
          }

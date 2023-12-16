@@ -1,4 +1,4 @@
-def lintChecks_maven(component){
+def lintChecks(component){
         sh "echo ***** Starting Style Checks for ${component} ***** "
         //sh "mvn checkstyle:check || true"
         sh "echo ***** Style Checks are completed for ${component} ***** "
@@ -14,7 +14,7 @@ def call(component){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks_maven("${component}")
+                    lintChecks("${component}")
                 }
             }
         }
