@@ -5,14 +5,6 @@ def lintChecks(component){
 
 } 
 
-def sonarChecks(component){
-    sh "echo Sonar Checks for ${component} in progress"
-    //sh"""
-    //sonar=scanner -Dsonar.host.url=http://PRIVATEIPOFSERVER:9000 -Dsonar.java.binaries=./target/ -Dsonar.projectKey=${component} -Dsonar.login=admin -Dsonar.password=password
-    //"""
-    sh "echo Sonar Checks for ${component} are completed"
-}
-
 def call(component){
     pipeline{
     agent {
@@ -37,8 +29,9 @@ def call(component){
         }
         stage('Static Code Analysis'){
             steps{
-                sonarChecks("${component}")
-
+                script{
+                    common.sonarChecks("${component}")
+                }
             }
         }
         stage('Get the Sonar Result'){
