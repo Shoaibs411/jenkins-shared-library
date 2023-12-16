@@ -14,7 +14,7 @@ def call(component){
         label "ws"
     }
     stages{
-         stage{
+         stage('Lint Checks'){
          steps{
                 script{
                     lintChecks_python("${component}")
