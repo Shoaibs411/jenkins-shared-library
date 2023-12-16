@@ -1,14 +1,17 @@
 def lintChecks_python(component){
-        sh "echo ***** Starting Style Checks for ${component} ***** "
-        //sh "/home/centos/payment/pylint payment.py || true"
-        //sh "/home/centos/payment/pylint rabbitmq.py || true"
-        sh """
-        pip install pylint
-        cd /home/centos/.local/lib/python3.6/site-packages/pylint
-        pylint ~/payment/*.py || true
-        """
-        sh "echo ***** Style Checks are completed for ${component}  ***** "
+    sh "echo ***** Starting Style Checks for ${component} ***** "
 
+    // Install pylint using pip
+    sh "/full/path/to/pip install pylint"
+
+    // Change directory to the directory containing the Python files
+    sh "cd /home/centos/payment/"
+
+    // Run pylint on all .py files in the specified directory
+    sh "/full/path/to/pylint /home/centos/payment/*.py || true"
+
+    sh "echo ***** Style Checks are completed for ${component} ***** "
+}
 } 
 
 def call(component){
