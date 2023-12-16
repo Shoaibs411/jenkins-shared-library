@@ -26,6 +26,11 @@ def call(component){
                 }
             }
         }
+        stage('Compiling Java Code'){
+            steps{
+                sh "mvn clean compile"
+            }
+        }
         stage('Static Code Analysis'){
             steps{
                 sonarChecks("${component}")
