@@ -18,6 +18,9 @@ def call(component){
     agent {
         label "ws"
     }
+    tools {
+        maven 'maven-396' 
+    }
     stages{
         stage('Lint Checks'){
             steps{
