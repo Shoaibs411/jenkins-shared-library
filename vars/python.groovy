@@ -12,7 +12,6 @@ def lintChecks_python(component){
 
     sh "echo ***** Style Checks are completed for ${component} ***** "
 }
-} 
 
 def call(component){
     pipeline{
