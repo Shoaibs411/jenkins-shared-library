@@ -14,11 +14,13 @@ def call(component){
         label "ws"
     }
     stages{
+         stage{
          steps{
                 script{
                     lintChecks_python("${component}")
                 }
             }
+         }
         stage('Static Code Analysis'){
             steps{
                 sh "echo ***** Starting Static Code Analysis ***** "
