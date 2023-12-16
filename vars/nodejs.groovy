@@ -1,4 +1,4 @@
-def lintChecks(component){
+def lintChecks_nodejs(component){
         sh "echo ***** Starting Style Checks for ${component} ***** "
         sh "npm install jslint"
         sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
@@ -15,7 +15,7 @@ def call(component){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks("${component}")
+                    lintChecks_nodejs("${component}")
                 }
             }
         }
