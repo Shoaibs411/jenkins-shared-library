@@ -10,6 +10,9 @@ def call(component){
     agent {
         label "ws"
     }
+    environment{
+        SONAR_CRED = credentials('SONAR_CRED')
+    }
     tools {
         maven 'maven-396' 
     }

@@ -14,6 +14,9 @@ def call(component){
     agent {
         label "ws"
     }
+    environment{
+        SONAR_CRED = credentials('SONAR_CRED')
+    }
     stages{
          stage('Lint Checks'){
          steps{
