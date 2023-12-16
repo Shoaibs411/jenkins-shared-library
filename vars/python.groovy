@@ -9,6 +9,14 @@ def lintChecks(component){
 
 } 
 
+def sonarChecks(component){
+    sh "echo Sonar Checks for ${component} in progress"
+    //sh"""
+    //sonar=scanner -Dsonar.host.url=http://PRIVATEIPOFSERVER:9000 -Dsonar.sources=. -Dsonar.projectKey=${component} -Dsonar.login=admin -Dsonar.password=password
+    //"""
+    sh "echo Sonar Checks for ${component} are completed"
+}
+
 def call(component){
     pipeline{
     agent {
@@ -24,8 +32,23 @@ def call(component){
          }
         stage('Static Code Analysis'){
             steps{
-                sh "echo ***** Starting Static Code Analysis ***** "
+                sonarChecks("${component}")
 
+            }
+        }
+        stage('Get the Sonar Result'){
+            steps{
+                sh "echo Getting Sonar Result for ${component}"
+                //sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
+                //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
+            }    
+        }
+        stage('Unit Testing'){
+            steps{
+                script{
+                    sh "echo Testing for ${component} in progress "
+                    sh "echo Testing for ${component} is completed "
+                }
             }
         }
     }
