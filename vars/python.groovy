@@ -4,7 +4,7 @@ def lintChecks_python(component){
         //sh "/home/centos/payment/pylint payment.py || true"
         //sh "/home/centos/payment/pylint rabbitmq.py || true"
         sh """
-        cd /home/centos/payment/"
+        cd /home/centos/payment/
         pylint *.py || true
         """
         sh "echo ***** Style Checks are completed for ${component}  ***** "
