@@ -1,6 +1,6 @@
 def lintChecks(component){
         sh "echo ***** Starting Style Checks for ${component} ***** "
-        //sh "mvn checkstyle:check || true"
+        sh "mvn checkstyle:check || true"
         sh "echo ***** Style Checks are completed for ${component} ***** "
 
 } 
