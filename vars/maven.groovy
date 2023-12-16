@@ -29,6 +29,7 @@ def call(component){
         stage('Compiling Java Code'){
             steps{
                 sh "mvn clean compile"
+                sh "ls -ltr target/"
             }
         }
         stage('Static Code Analysis'){
