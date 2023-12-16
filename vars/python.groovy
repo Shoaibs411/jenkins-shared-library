@@ -1,9 +1,9 @@
 def lintChecks_python(component){
         sh "echo ***** Starting Style Checks for ${component} ***** "
-        sh "pip install pylint"
         //sh "/home/centos/payment/pylint payment.py || true"
         //sh "/home/centos/payment/pylint rabbitmq.py || true"
         sh """
+        pip install pylint
         cd /home/centos/payment/
         pylint *.py || true
         """
