@@ -6,7 +6,7 @@ def lintChecks(component){
 
 } 
 
-def sample(component_name){
+def call(component){
     pipeline{
     agent {
         label "ws"
@@ -15,7 +15,7 @@ def sample(component_name){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks("${component_name}")
+                    lintChecks("${component}")
                 }
             }
         }
