@@ -15,7 +15,7 @@ def PipeLine(component_name){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks('${component_name}')
+                    lintChecks("${component_name}")
                 }
             }
         }
