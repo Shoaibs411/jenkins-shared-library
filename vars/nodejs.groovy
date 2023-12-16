@@ -21,7 +21,9 @@ def call(component){
         }
         stage('Static Code Analysis'){
             steps{
-                common.sonarChecks("${component}")
+                script{
+                    common.sonarChecks("${component}")
+                }
 
             }
         }
