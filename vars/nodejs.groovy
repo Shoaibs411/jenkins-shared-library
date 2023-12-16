@@ -36,7 +36,8 @@ def call(component){
         stage('Unit Testing'){
             steps{
                 script{
-                    sh "echo Testing in progress "
+                    sh "echo Testing for ${component} in progress "
+                    sh "echo Testing for ${component} is completed "
                 }
             }
         }
