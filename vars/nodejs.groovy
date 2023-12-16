@@ -6,7 +6,7 @@ def lintChecks(component){
 
 } 
 
-def PipeLine(component_name){
+def sample(component_name){
     pipeline{
     agent {
         label "ws"
