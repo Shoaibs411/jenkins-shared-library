@@ -38,6 +38,7 @@ def call(component){
                 //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
             }    
         }
+        
         stage('Unit Testing'){
             steps{
                 script{
