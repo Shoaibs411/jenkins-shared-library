@@ -40,32 +40,30 @@ def call(component){
         }
         
         stage("Test Cases"){
-
         parallel {
             stage('Unit Testing') {
                 steps {
-                    sh "echo Unit Testing in progress"
+                    sh "echo Unit Testing for ${component} in progress"
                     //sh "npm test" just for example
-                    sh "echo Unit Testing is Completed"
+                    sh "echo Unit Testing for ${component} is Completed"
 
                 }
             }
             stage('Integration Testing') {
                 steps {
-                    sh "echo Integration Testing in progress"
+                    sh "echo Integration Testing for ${component} in progress"
                     //sh "npm verify" just for example
-                    sh "echo Integration Testing is Completed" 
+                    sh "echo Integration Testing for ${component} is Completed" 
                 }
             }
             stage('Functional Testing') {
                 steps {
-                    sh "echo Functional Testing in progress"
+                    sh "echo Functional Testing for ${component} in progress"
                     //sh"npm function" just for example
-                    sh "echo Functional Testing is Completed"
+                    sh "echo Functional Testing for ${component} is Completed"
                 }
             }
-        }
-  
+        } 
     }
     }
     }
