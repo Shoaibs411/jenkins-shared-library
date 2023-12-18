@@ -38,15 +38,35 @@ def call(component){
                 //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
             }    
         }
-        stage('Unit Testing'){
-            steps{
-                script{
-                    sh "echo Testing for ${component} in progress "
-                    sh "echo Testing for ${component} is completed "
+        
+        stage("Test Cases"){
+
+        parallel {
+            stage('Unit Testing') {
+                steps {
+                    sh "echo Unit Testing in progress"
+                    //sh "npm test" just for example
+                    sh "echo Unit Testing is Completed"
+
+                }
+            }
+            stage('Integration Testing') {
+                steps {
+                    sh "echo Integration Testing in progress"
+                    //sh "npm verify" just for example
+                    sh "echo Integration Testing is Completed" 
+                }
+            }
+            stage('Functional Testing') {
+                steps {
+                    sh "echo Functional Testing in progress"
+                    //sh"npm function" just for example
+                    sh "echo Functional Testing is Completed"
                 }
             }
         }
   
+    }
     }
     }
 }

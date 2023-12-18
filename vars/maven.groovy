@@ -33,7 +33,7 @@ def call(component){
         stage('Static Code Analysis'){
             steps{
                 script{
-                    env.ARGS="-Dsonar.sources=."
+                    env.ARGS="-Dsonar.java.binaries=./target/"
                     common.sonarChecks("${component}")
                 }
             }
