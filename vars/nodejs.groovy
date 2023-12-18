@@ -63,6 +63,16 @@ def call(component){
                     sh "echo Functional Testing for ${component} is Completed"
                 }
             }
+        }
+        stage("Prepare Artifacts"){
+            steps{
+                sh "echo Preparing artifacts for ${component}"
+            }
+        }
+         stage("Upload Artifacts"){
+            steps{
+                sh "echo Uploading artifacts for ${component}"
+            }
         } 
     }
     }

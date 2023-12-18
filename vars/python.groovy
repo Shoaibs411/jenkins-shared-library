@@ -45,7 +45,7 @@ def call(component){
             stage('Unit Testing') {
                 steps {
                     sh "echo Unit Testing for ${component} in progress"
-                    //sh "npm test" just for example
+                    //sh "pip test" just for example
                     sh "echo Unit Testing is Completed"
 
                 }
@@ -53,17 +53,27 @@ def call(component){
             stage('Integration Testing') {
                 steps {
                     sh "echo Integration Testing for ${component} in progress"
-                    //sh "npm verify" just for example
+                    //sh "pip verify" just for example
                     sh "echo Integration Testing for ${component} is Completed" 
                 }
             }
             stage('Functional Testing') {
                 steps {
                     sh "echo Functional Testing for ${component} in progress"
-                    //sh"npm function" just for example
+                    //sh"pip function" just for example
                     sh "echo Functional Testing for ${component} is Completed"
                 }
             }
+            stage("Prepare Artifacts"){
+            steps{
+                sh "echo Preparing artifacts for ${component}"
+            }
+        }
+         stage("Upload Artifacts"){
+            steps{
+                sh "echo Uploading artifacts for ${component}"
+            }
+        }
         } 
     }
     }
