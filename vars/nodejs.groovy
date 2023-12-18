@@ -64,6 +64,7 @@ def call(component){
                 }
             }
         }
+    }
         stage("Prepare Artifacts"){
             steps{
                 sh "echo Preparing artifacts for ${component}"
@@ -74,7 +75,6 @@ def call(component){
                 sh "echo Uploading artifacts for ${component}"
             }
         } 
-    }
     }
     }
 }
