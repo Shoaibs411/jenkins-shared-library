@@ -34,8 +34,9 @@ def call(component){
         stage('Get the Sonar Result'){
             steps{
                 sh "echo Getting Sonar Result for ${component}"
-                //sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
+                sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
                 //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
+                sh "echo Sonar scan is Good"
             }    
         }
 
