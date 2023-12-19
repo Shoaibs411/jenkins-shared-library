@@ -73,7 +73,7 @@ def call(component){
                 sh '''
                     npm install
                     ls -ltr
-                    zip ${component}=${TAG_NAME}.zip node_modules server.js
+                    zip ${component}-${TAG_NAME}.zip node_modules server.js
                     ls -ltr
 
                    '''
