@@ -49,6 +49,7 @@ def call(component){
         parallel {
             stage('Unit Testing') {
                 steps {
+                    sh "env"
                     sh "echo Unit Testing for ${component} in progress"
                     //sh "mvn test" just for example
                     sh "echo Unit Testing for ${component} is Completed"
@@ -72,11 +73,13 @@ def call(component){
         } 
     }
         stage("Prepare Artifacts"){
+            when { expression { env.TAG_NAME != null } }
             steps{
                 sh "echo Preparing artifacts for ${component}"
             }
         }
          stage("Upload Artifacts"){
+            when { expression { env.TAG_NAME != null } }
             steps{
                 sh "echo Uploading artifacts for ${component}"
             }
