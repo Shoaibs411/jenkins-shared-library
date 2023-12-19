@@ -1,12 +1,12 @@
-def lintChecks(component){
-        sh "echo ***** Starting Style Checks for ${component} ***** "
+def lintChecks(){
+        sh "echo ***** Starting Style Checks for ${COMPONENT} ***** "
         sh "npm install jslint"
         sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
-        sh "echo ***** Style Checks are completed for ${component} ***** "
+        sh "echo ***** Style Checks are completed for ${COMPONENT} ***** "
 
 } 
 
-def call(component){
+def call(){
     pipeline{
     agent {
         label "ws"
@@ -18,7 +18,7 @@ def call(component){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks("${component}")
+                    lintChecks()
                 }
             }
         }
@@ -26,14 +26,13 @@ def call(component){
             steps{
                 script{
                     env.ARGS="-Dsonar.java.binaries=./target/"
-                    common.sonarChecks("${component}")
+                    common.sonarChecks()
                 }
 
             }
         }
         stage('Get the Sonar Result'){
             steps{
-                sh "echo Getting Sonar Result for ${component}"
                 sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
                 //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
                 sh "echo Sonar scan is Good"
@@ -45,24 +44,24 @@ def call(component){
             stage('Unit Testing') {
                 steps {
                     sh "env"
-                    sh "echo Unit Testing for ${component} in progress"
+                    sh "echo Unit Testing in progress"
                     //sh "npm test" just for example
-                    sh "echo Unit Testing for ${component} is Completed"
+                    sh "echo Unit Testing is Completed"
 
                 }
             }
             stage('Integration Testing') {
                 steps {
-                    sh "echo Integration Testing for ${component} in progress"
+                    sh "echo Integration Testing in progress"
                     //sh "npm verify" just for example
-                    sh "echo Integration Testing for ${component} is Completed" 
+                    sh "echo Integration Testing is Completed" 
                 }
             }
             stage('Functional Testing') {
                 steps {
-                    sh "echo Functional Testing for ${component} in progress"
+                    sh "echo Functional Testing in progress"
                     //sh"npm function" just for example
-                    sh "echo Functional Testing for ${component} is Completed"
+                    sh "echo Functional Testing is Completed"
                 }
             }
         }
@@ -73,7 +72,7 @@ def call(component){
                 sh '''
                     npm install
                     ls -ltr
-                    zip ${component}-${TAG_NAME}.zip node_modules server.js
+                    zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
                     ls -ltr
 
                    '''
@@ -82,7 +81,7 @@ def call(component){
          stage("Upload Artifacts"){
             when { expression { env.TAG_NAME != null } }
             steps{
-                sh "echo Uploading artifacts for ${component}"
+                sh "echo Uploading artifacts for ${COMPONENTS}"
             }
         } 
     }
