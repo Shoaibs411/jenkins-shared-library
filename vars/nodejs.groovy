@@ -68,13 +68,13 @@ def call(component){
     }
         stage("Prepare Artifacts"){
             steps{
-                when { expression { env.TAG_NAME != null } }
+                //when { expression { env.TAG_NAME != null } }
                 sh "echo Preparing artifacts for ${component}"
             }
         }
          stage("Upload Artifacts"){
             steps{
-                when { expression { env.TAG_NAME != null } }
+                //when { expression { env.TAG_NAME != null } }
                 sh "echo Uploading artifacts for ${component}"
             }
         } 
