@@ -64,6 +64,23 @@ def call(){
                     sh "echo Functional Testing is Completed"
                 }
             }
+            stage("Prepare Artifacts"){
+            when { expression { env.TAG_NAME != null } }
+            steps{
+                sh '''
+                    npm install
+                    ls -ltr
+                    zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
+                    ls -ltr
+                   '''
+            }
+        }
+            stage("Upload Artifacts"){
+            when { expression { env.TAG_NAME != null } }
+            steps{
+                sh "echo Uploading artifacts for ${component}"
+            }
+        }
         }
     }
     }
