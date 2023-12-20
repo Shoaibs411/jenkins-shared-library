@@ -67,7 +67,7 @@ def call(component){
         }
     }
         stage("Prepare Artifacts"){
-            //when { expression { env.TAG_NAME != null } }
+            when { expression { env.TAG_NAME != null } }
             steps{
                 sh '''
                     npm install
@@ -79,7 +79,7 @@ def call(component){
             }
         }
          stage("Upload Artifacts"){
-            //when { expression { env.TAG_NAME != null } }
+            when { expression { env.TAG_NAME != null } }
             steps{
                 sh "echo Uploading artifacts for ${component}"
             }
