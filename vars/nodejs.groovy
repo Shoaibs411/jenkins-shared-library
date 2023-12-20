@@ -1,12 +1,12 @@
-def lintChecks(component){
-        sh "echo ***** Starting Style Checks for ${component} ***** "
+def lintChecks(){
+        sh "echo ***** Starting Style Checks  ***** "
         sh "npm install jslint"
         sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
         sh "echo ***** Style Checks are completed  ***** "
 
 } 
 
-def call(component){
+def call(){
     pipeline{
     agent {
         label "ws"
@@ -18,7 +18,7 @@ def call(component){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks("${component}")
+                    lintChecks()
                 }
             }
         }
@@ -26,7 +26,7 @@ def call(component){
             steps{
                 script{
                     env.ARGS="-Dsonar.java.binaries=./target/"
-                    common.sonarChecks("${component}")
+                    common.sonarChecks())
                 }
 
             }
@@ -34,7 +34,7 @@ def call(component){
         stage('Get the Sonar Result'){
             steps{
                 sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
-                //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
+                //sh "bash gates.sh admin password ${SONAR_URL} ${COMPONENT}"
                 sh "echo Sonar scan is Good"
             }    
         }
@@ -66,23 +66,6 @@ def call(component){
             }
         }
     }
-        stage("Prepare Artifacts"){
-            when { expression { env.TAG_NAME != null } }
-            steps{
-                sh '''
-                    npm install
-                    ls -ltr
-                    zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
-                    ls -ltr
-                   '''
-            }
-        }
-         stage("Upload Artifacts"){
-            when { expression { env.TAG_NAME != null } }
-            steps{
-                sh "echo Uploading artifacts for ${component}"
-            }
-        } 
     }
     }
 }
