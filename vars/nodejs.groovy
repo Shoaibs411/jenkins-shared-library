@@ -78,7 +78,7 @@ def call(){
             stage("Upload Artifacts"){
             when { expression { env.TAG_NAME != null } }
             steps{
-                sh "echo Uploading artifacts for ${component}"
+                sh "echo Uploading artifacts for ${COMPONENT}"
             }
         }
         }

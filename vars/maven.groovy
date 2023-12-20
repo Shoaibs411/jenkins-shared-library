@@ -1,11 +1,11 @@
-def lintChecks(component){
+def lintChecks(){
         sh "echo ***** Starting Style Checks for ***** "
         sh "mvn checkstyle:check || true"
         sh "echo ***** Style Checks are completed for ***** "
 
 } 
 
-def call(component){
+def call(){
     pipeline{
     agent {
         label "ws"
@@ -20,7 +20,7 @@ def call(component){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks("${component}")
+                    lintChecks()
                 }
             }
         }
@@ -34,7 +34,7 @@ def call(component){
             steps{
                 script{
                     env.ARGS="-Dsonar.java.binaries=./target/"
-                    common.sonarChecks("${component}")
+                    common.sonarChecks()
                 }
             }
         }
@@ -42,7 +42,7 @@ def call(component){
             steps{
                 sh "echo Getting Sonar Result for"
                 sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
-                //sh "bash gates.sh admin password ${SONAR_URL} ${component}"
+                //sh "bash gates.sh admin password ${SONAR_URL} ${COMPONENT}"
                 sh "echo Sonar scan is Good"
             }    
         }
