@@ -1,4 +1,4 @@
-def lintChecks(){
+def lintChecks(component){
         sh "echo ***** Starting Style Checks ***** "
         sh "npm install jslint"
         sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
@@ -6,7 +6,7 @@ def lintChecks(){
 
 } 
 
-def call(){
+def call(component){
     pipeline{
     agent {
         label "ws"
@@ -18,7 +18,7 @@ def call(){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks()
+                    lintChecks("${component}")
                 }
             }
         }
@@ -26,7 +26,7 @@ def call(){
             steps{
                 script{
                     env.ARGS="-Dsonar.java.binaries=./target/"
-                    common.sonarChecks()
+                    common.sonarChecks("${component}")
                 }
 
             }
@@ -81,7 +81,7 @@ def call(){
          stage("Upload Artifacts"){
             //when { expression { env.TAG_NAME != null } }
             steps{
-                sh "echo Uploading artifacts for ${COMPONENTS}"
+                sh "echo Uploading artifacts for ${component}"
             }
         } 
     }

@@ -1,11 +1,11 @@
-def lintChecks(){
+def lintChecks(component){
         sh "echo ***** Starting Style Checks for ***** "
         sh "mvn checkstyle:check || true"
         sh "echo ***** Style Checks are completed for ***** "
 
 } 
 
-def call(){
+def call(component){
     pipeline{
     agent {
         label "ws"
@@ -20,7 +20,7 @@ def call(){
         stage('Lint Checks'){
             steps{
                 script{
-                    lintChecks()
+                    lintChecks("${component}")
                 }
             }
         }
@@ -34,7 +34,7 @@ def call(){
             steps{
                 script{
                     env.ARGS="-Dsonar.java.binaries=./target/"
-                    common.sonarChecks()
+                    common.sonarChecks("${component}")
                 }
             }
         }
