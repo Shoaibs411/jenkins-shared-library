@@ -1,89 +1,109 @@
-def lintChecks(){
-        sh "echo ***** Starting Style Checks  ***** "
-        sh "npm install jslint"
-        sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
-        sh "echo ***** Style Checks are completed  ***** "
-
-} 
-
-def call(){
-    pipeline{
-    agent {
-        label "ws"
-    }
-    environment{
-        SONAR_CRED = credentials('SONAR_CRED')
-        NEXUS = credentials('NEXUS')
-    }
-    stages{
-        stage('Lint Checks'){
-            steps{
-                script{
-                    lintChecks()
-                }
-            }
+def call() {
+    node {
+        git branch: 'main', url: "https://github.com/b56-clouddevops/${COMPONENT}.git"
+        common.lintChecks()
+        env.ARGS="-Dsonar.sources=."
+        common.sonarChecks()
+        common.testCases()
+        if(env.TAG_NAME != null) {
+            common.artifacts()
         }
-        stage('Static Code Analysis'){
-            steps{
-                script{
-                    env.ARGS="-Dsonar.java.binaries=./target/"
-                    common.sonarChecks()
-                }
-
-            }
-        }
-        stage('Get the Sonar Result'){
-            steps{
-                sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
-                //sh "bash gates.sh admin password ${SONAR_URL} ${COMPONENT}"
-                sh "echo Sonar scan is Good"
-            }    
-        }
-        
-        stage("Test Cases"){
-        parallel {
-            stage('Unit Testing') {
-                steps {
-                    sh "env"
-                    sh "echo Unit Testing in progress"
-                    //sh "npm test" just for example
-                    sh "echo Unit Testing is Completed"
-
-                }
-            }
-            stage('Integration Testing') {
-                steps {
-                    sh "echo Integration Testing in progress"
-                    //sh "npm verify" just for example
-                    sh "echo Integration Testing is Completed" 
-                }
-            }
-            stage('Functional Testing') {
-                steps {
-                    sh "echo Functional Testing in progress"
-                    //sh"npm function" just for example
-                    sh "echo Functional Testing is Completed"
-                }
-            }
-            stage("Prepare Artifacts"){
-            when { expression { env.TAG_NAME != null } }
-            steps{
-                sh '''
-                    npm install
-                    ls -ltr
-                    zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
-                    ls -ltr
-                   '''
-            }
-        }
-            stage("Upload Artifacts"){
-            when { expression { env.TAG_NAME != null } }
-            steps{
-                sh "echo Uploading artifacts for ${COMPONENT}"
-            }
-        }
-        }
-    }
-    }
     }
 }
+
+
+/* Uncomment this to run it over Declarative approach */
+// def call() {
+//     pipeline {
+//         agent any
+//         environment {                      
+//             SONAR_CRED = credentials('SONAR_CRED')
+//             NEXUS = credentials('NEXUS')
+//             SONAR_URL = "172.31.45.101"
+//             NEXUS_URL = "172.31.34.215"
+//         }
+//         stages {
+//             stage('Lint Checks'){
+//                 steps {
+//                     script {
+//                         common.lintChecks()
+//                     }
+//                 }
+//             }
+//             stage('Static Code Analysis') {
+//                 steps {
+//                     script {
+//                         env.ARGS="-Dsonar.sources=."
+//                         common.sonarChecks()
+//                     }
+//                 }
+//             }
+//             stage('Get the Sonar Result') {
+//                 steps {
+//                     sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > gates.sh"
+//                     // sh "bash gates.sh admin password ${SONAR_URL} ${COMPONENT}"
+//                     sh "echo Scan Is Good"
+//                 }
+//             }
+//         stage('Test Cases') {
+//             parallel {
+//                 stage('Unit Testing') {
+//                     steps {
+//                         sh "env"
+//                         sh "echo Unit Testing In Progress"
+//                         // sh "npm test"
+//                         sh "echo Unit Testing In Completed"
+//                     }
+//                 }
+//                 stage('Integration Testing') {
+//                     steps {
+//                         sh "echo Integration Testing In Progress"
+//                         // sh "npm verify"
+//                         sh "echo Integration Testing In Completed"
+//                     }
+//                 }
+//                 stage('Functional Testing') {
+//                     steps {
+//                         sh "echo Functional Testing In Progress"
+//                         // sh "npm function"
+//                         sh "echo Functional Testing In Completed"
+//                         }
+//                     }
+//                 }
+//             }
+//             stage('Checking Artifacts Avaiability On Nexus') {
+//                 when { expression { env.TAG_NAME != null } }
+//                 steps {
+//                     script {
+//                         env.UPLOAD_STATUS = sh(returnStdout: true, script: "curl http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
+//                         print UPLOAD_STATUS
+//                     }
+//                 }
+//             }
+//             stage('Prepare Artifacts') {
+//                 when { 
+//                     expression { env.TAG_NAME != null } 
+//                     expression { env.UPLOAD_STATUS == "" } 
+//                 }
+//                 steps {
+//                     sh ''' 
+//                          npm install 
+//                          ls -ltr 
+//                          zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
+//                          ls -ltr
+//                        '''
+//                 }
+//             }
+//             stage('Uploading Artifacts') {
+//                 when { 
+//                     expression { env.TAG_NAME != null } 
+//                     expression { env.UPLOAD_STATUS == "" } 
+//                 }
+//                 steps {
+//                     sh "echo Uploading ${COMPONENT} Artifacts . . . ."
+//                     sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.34.215:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+//                 }
+//             }
+//         }
+//     }
+// }
