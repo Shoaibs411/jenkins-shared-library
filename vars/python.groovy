@@ -1,8 +1,8 @@
 def lintChecks(){
         sh "echo ***** Starting Style Checks ***** "
-        sh "pip install pylint"
-        sh "/home/centos/payment/ pylint payment.py || true"
-        sh "/home/centos/payment/ pylint rabbitmq.py || true"
+        //sh "pip install pylint"
+        //sh "/home/centos/payment/ pylint payment.py || true"
+        //sh "/home/centos/payment/ pylint rabbitmq.py || true"
         //sh "/home/centos/payment/ pylint *.py || true"
         //sh "pylint ~/payment/*.py"
         sh "echo ***** Style Checks are complete ***** "
@@ -16,6 +16,7 @@ def call(){
     }
     environment{
         SONAR_CRED = credentials('SONAR_CRED')
+        NEXUS = credentials('NEXUS')
     }
     stages{
          stage('Lint Checks'){

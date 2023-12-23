@@ -12,6 +12,7 @@ def call(){
     }
     environment{
         SONAR_CRED = credentials('SONAR_CRED')
+        NEXUS = credentials('NEXUS')
     }
     tools {
         maven 'maven-396' 
