@@ -29,7 +29,7 @@ def lintChecks() {
                sh '''
                     echo ***** Starting Style Checks for ${COMPONENT} *****
                     pip3 install pylint
-                    pytlint *.py || true
+                    pylint *.py || true
                     echo ***** Style Checks Are Completed for ${COMPONENT} *****
                '''
           }
