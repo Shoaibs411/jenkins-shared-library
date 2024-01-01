@@ -20,7 +20,7 @@ def call() {
             SONAR_CRED = credentials('SONAR_CRED')
             NEXUS = credentials('NEXUS')
             SONAR_URL = "172.31.45.101"
-            NEXUS_URL = "172.31.90.203"
+            NEXUS_URL = "172.31.52.31"
         }
         stages {
             stage('Lint Checks'){
@@ -101,7 +101,7 @@ def call() {
                 // }
                 steps {
                     sh "echo Uploading ${COMPONENT} Artifacts . . . ."
-                    sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://54.147.236.194:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                    sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.52.31:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                 }
             }
         }
