@@ -20,12 +20,14 @@
 
 def call() {
     pipeline {
-        agent ws
+        agent{
+            label 'ws'
+        }
         environment {                      
             SONAR_CRED = credentials('SONAR_CRED')
             NEXUS = credentials('NEXUS')
             SONAR_URL = "172.31.45.101"
-            NEXUS_URL = "172.31.90.203"
+            NEXUS_URL = "172.31.52.31"
         }
         tools {
             maven 'maven-396' 
