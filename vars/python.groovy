@@ -1,5 +1,5 @@
 def call() {
-    node {
+    node('ws') {
         git branch: 'main', url: "https://github.com/Shoaibs411/${COMPONENT}.git"
         common.lintChecks()
         env.ARGS="-Dsonar.sources=."
