@@ -101,7 +101,7 @@ def artifacts() {
                withCredentials([usernamePassword(credentialsId: 'NEXUS', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
                     sh "echo Uploading ${COMPONENT} artifacts to Nexus"
                     sh "ls -ltr"
-                    sh "curl -f -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.34.215:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                    sh "curl -f -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.52.31:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                     sh "echo Upload Completed"
                }
           }
