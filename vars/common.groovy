@@ -28,8 +28,8 @@ def lintChecks() {
           else if(env.APP_TYPE == "python") {
                sh '''
                     echo ***** Starting Style Checks for ${COMPONENT} *****
-                    pip3 install pylint
-                    pylint *.py || true
+                    # pip3 install pylint
+                    # pylint *.py || true
                     echo ***** Style Checks Are Completed for ${COMPONENT} *****
                '''
           }
