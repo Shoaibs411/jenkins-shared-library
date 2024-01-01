@@ -15,7 +15,9 @@
 /* Uncomment this to run it over Declarative approach */
 def call() {
     pipeline {
-        agent any
+        agent {
+            label 'ws'
+        }
         environment {                      
             SONAR_CRED = credentials('SONAR_CRED')
             NEXUS = credentials('NEXUS')
