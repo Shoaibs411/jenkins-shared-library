@@ -17,7 +17,7 @@ def lintChecks() {
                     echo ***** Style Checks Are Completed for ${COMPONENT} *****
                '''
           }
-          else if(env.APP_TYPE == "node") {
+          else if(env.APP_TYPE == "nodejs") {
                sh '''
                     echo ***** Starting Style Checks for ${COMPONENT} *****
                     npm install jslint
