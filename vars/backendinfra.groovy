@@ -34,7 +34,7 @@ def call(){
             
         }
     }
-
+}
 // pipeline {
 //     agent{
 //         label 'ws'
