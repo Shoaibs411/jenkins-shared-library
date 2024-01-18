@@ -10,23 +10,20 @@ def call(){
         ansiColor('xterm'){
             git branch: 'main', url: "https://github.com/Shoaibs411/${COMPONENT}.git"
             stage('Terraform Init'){
-                sh 
-                '''
+                sh '''
                     cd mutable-infra
                     terrafile -f env-dev/Terrafile
                     terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
                 '''
             }
             stage('Terraform Plan'){
-                sh 
-                '''
+                sh '''
                     cd mutable-infra
                     terraform plan -var-file=env-${ENV}/${ENV}.tfvars
                 '''
             }
             stage('Terraform Action'){
-                sh 
-                '''
+                sh '''
                     cd mutable-infra
                     terraform ${ACTION} -auto-approve -var-file=env-${ENV}/${ENV}.tfvars
                 '''
