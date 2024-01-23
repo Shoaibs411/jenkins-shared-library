@@ -74,7 +74,7 @@ def artifacts() {
           stage('Generating The Artifacts') {
                if(env.APP_TYPE == "nodejs") {
                     sh "npm install"
-                    sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                    sh "zip ${COMPONENT}-${TAG_NAME}.zip package.json node_modules/ server.js systemd.service"
                }
                else if(env.APP_TYPE == "python") {
                     sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py  *.ini requirements.txt"
