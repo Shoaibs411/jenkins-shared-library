@@ -14,7 +14,7 @@ def call(){
                 sh '''
                     cd mutable-infra
                     terrafile -f env-dev/Terrafile
-                    terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
+                    terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars -reconfigure
                 '''
             }
             stage('Terraform Plan'){
